@@ -1,0 +1,11 @@
+.footer {
+    background: rgb(221, 185, 131);
+    color: #000000;
+    text-align: center;
+    padding: 0.5rem 0;
+  }
+
+.footer p{
+    font-size: small;
+    font-family: 'Kumbh Sans', sans-serif;
+}

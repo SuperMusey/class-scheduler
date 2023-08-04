@@ -1,0 +1,18 @@
+.header {
+    background: rgb(221, 185, 131);
+    color: #000000;
+    text-align: left;
+    padding: 0.5rem 0;
+    display: flex;
+  }
+
+  .header h1{
+    font-size: large;
+    font-family: 'Kumbh Sans', sans-serif;
+  }
+  
+  .header img {
+    width: 100px; 
+    margin-right: 20px;
+    margin-left: 20px;
+  }
