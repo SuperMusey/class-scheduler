@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Table from '../components/Table';
+import styles from '../assets/styles/tablecontainer.module.css'
 
 function TableContainer() {
   const [tableDataIndex, setTableDataIndex] = useState(0);
@@ -26,10 +27,12 @@ function TableContainer() {
   };
 
   return (
-    <div>
+    <div className={styles.table_container}>
       <Table data={tableData[tableDataIndex]} />
-      <button type='view_tables' onClick={handlePrev}>Prev</button>
-      <button type='view_tables' onClick={handleNext}>Next</button>
+      <div className={styles.button_container}>
+        <button type='view_tables' onClick={handlePrev}>Prev</button>
+        <button type='view_tables' onClick={handleNext}>Next</button>
+      </div>
     </div>
   );
 }

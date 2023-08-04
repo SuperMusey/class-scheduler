@@ -1,0 +1,23 @@
+.table_container{
+    text-align: center;
+}
+
+.button_container{
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.button_container button[type="view_tables"]{
+    padding: 8px 16px;  
+    margin: 0 5px;
+    background-color: rgb(221, 185, 131);
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button_container button[type="view_tables"]:hover{
+    background-color: rgb(217, 204, 184);
+}

@@ -7,7 +7,9 @@ import '../utils/__constants__'
 function MainPageContainer(){
     return(
         <div className={styles.body_container}>
-            <Form/>
+            <div className={styles.form_div}>
+                <Form/>
+            </div>
             <TableContainer/>
         </div>
     );
