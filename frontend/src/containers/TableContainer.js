@@ -10,6 +10,9 @@ function TableContainer() {
     [
       { course: 'Course 1', prof: 'Professor A', rating: 4.5, start: '2023-08-01', end: '2023-12-15', days: 'Mon-Wed-Fri' },
       { course: 'Course 2', prof: 'Professor B', rating: 3.8, start: '2023-08-15', end: '2023-12-30', days: 'Tue-Thu' },
+      { course: 'Course 2', prof: 'Professor B', rating: 3.8, start: '2023-08-15', end: '2023-12-30', days: 'Tue-Thu' },
+      { course: 'Course 2', prof: 'Professor B', rating: 3.8, start: '2023-08-15', end: '2023-12-30', days: 'Tue-Thu' },
+      { course: 'Course 2', prof: 'Professor B', rating: 3.8, start: '2023-08-15', end: '2023-12-30', days: 'Tue-Thu' },
     ],
     [
       { course: 'Course X', prof: 'Professor Y', rating: 4.2, start: '2023-09-01', end: '2023-12-31', days: 'Mon-Wed' },
