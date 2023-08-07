@@ -1,3 +1,4 @@
+export const BACKEND_URL = '';
 export const MAX_CLASSES = 5;
 export const FIELDS_PER_CLASS = 3;
 export const COLLEGE_OPTIONS = [

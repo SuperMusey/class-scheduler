@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../assets/styles/table.module.css'; // Import the CSS for the table
+import styles from '../assets/styles/table.module.css';
 
 function Table({ data }) {
   return (
