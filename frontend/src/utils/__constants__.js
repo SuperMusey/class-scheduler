@@ -1,4 +1,4 @@
-export const BACKEND_URL = '';
+export const BACKEND_URL = 'http://127.0.0.1:8080/';
 export const MAX_CLASSES = 5;
 export const FIELDS_PER_CLASS = 3;
 export const COLLEGE_OPTIONS = [

@@ -1,29 +1,19 @@
+import {BACKEND_URL} from './__constants__'
 
-const fetchData = async (url, params) => {
+export const sendData = async (requestData) => {
+  const url = BACKEND_URL+'api/data';
   try {
-    // Construct the query string from the JSON parameters
-    const queryParams = new URLSearchParams(params);
-
-    // Construct the complete URL with query parameters
-    const completeUrl = url + '?' + queryParams.toString();
-
-    // Perform the GET request using fetch
-    const response = await fetch(completeUrl, {
-      method: 'GET',
+    const response = await fetch(url, {
+      method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        // Add any other headers if needed
       },
+      body: JSON.stringify(requestData),
     });
 
-    // Parse the JSON response
-    const data = await response.json();
-    return data;
+    const responseData = await response.json();
+    return responseData;
   } catch (error) {
-    console.error('Error fetching data:', error);
-    throw error;
+    throw new Error('Error:', error);
   }
 };
-
-
-export default fetchData;

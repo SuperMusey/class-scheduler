@@ -3,27 +3,23 @@ import styles from '../assets/styles/mainpagecontainer.module.css'
 import Form from '../components/Form'
 import TableContainer from './TableContainer'
 import '../utils/__constants__'
-//import {fetchData} from '../utils/api'
+import {sendData} from '../utils/api'
+import {getCoursesInputedAsArray} from '../utils/parsing'
 
 function MainPageContainer(){
     const [responseData, setResponseData] = useState({
         0:[{ course: '', prof: '', rating: null, start: '', end: '', days: '' },],
     });
 
-    const handleFormSubmit = (formData) => {
-        //send fetch req to backend for calculations and get table response
-        let data = {
-            0: [
-                {"course": "Math", "prof": "Dr. Smith", "days": "Mon, Wed"},
-                {"course": "Physics", "prof": "Dr. Johnson", "days": "Tue, Thu"},
-            ],
-            1: [
-                {"course": "History", "prof": "Dr. Brown", "days": "Wed, Fri"},
-                {"course": "English", "prof": "Dr. Davis", "days": "Mon, Thu"},
-            ],
+    const handleFormSubmit = async (formData) => {
+        try {
+          // Send fetch req to backend for calculations and get table response
+          const response = await sendData(getCoursesInputedAsArray(formData));
+          setResponseData(response); // Update the state with the parsed response data
+        } catch (error) {
+          console.error('Error:', error);
         }
-        setResponseData(data)
-    };
+      };
 
     return(
         <div className={styles.body_container}>
