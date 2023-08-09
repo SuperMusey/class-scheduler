@@ -1,6 +1,6 @@
 from flask import jsonify, request
 from flask_restx import Resource, Api
-from app.utils.data_handler import handle_data
+from app.services.data_handler import handle_data
 
 api = Api()
 

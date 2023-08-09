@@ -52,7 +52,52 @@ class DatabaseManager:
             query = f"DELETE FROM {table}"
             self.cursor.execute(query)
 
-    def run(self):
+    def get_data(self, classArray):
+        try:
+            returned_course_dict = {}
+            self.connect()
+            for course_name in classArray:
+                self.cursor.execute("SELECT ci.class_uniqueness_id, c.course_name, p.professor_name, p.rating, ci.start_time, ci.end_time, ci.days "
+                                    "FROM courses AS c "
+                                    "INNER JOIN course_info AS ci ON c.course_id = ci.course_id "
+                                    "INNER JOIN professors AS p ON ci.professor_id = p.professor_id "
+                                    "WHERE c.course_name = ?", (course_name,))
+            
+                each_course_info = self.cursor.fetchall()
+                for class_uniqueness_id, course_name, professor_name, rating, start_time, end_time, days in each_course_info:
+                    if course_name not in returned_course_dict:
+                        returned_course_dict[course_name] = [] 
+                        returned_course_dict[course_name].append({
+                        'prof': professor_name,
+                        'rating': rating,
+                        'starttime': [int(start_time)],
+                        'endtime': [int(end_time)],
+                        'days': [[day for day in days]]
+                        })
+                    else:
+                        if 0 <= class_uniqueness_id < len(returned_course_dict[course_name]):
+                            starttime_to_append = start_time
+                            endtime_to_append = end_time
+                            days_to_append = days
+                            returned_course_dict[course_name][class_uniqueness_id]['starttime'].append(int(starttime_to_append))
+                            returned_course_dict[course_name][class_uniqueness_id]['endtime'].append(int(endtime_to_append))
+                            returned_course_dict[course_name][class_uniqueness_id]['days'].append([day for day in days_to_append])
+                        else:
+                            returned_course_dict[course_name].append({
+                            'prof': professor_name,
+                            'rating': rating,
+                            'starttime': [int(start_time)],
+                            'endtime': [int(end_time)],
+                            'days': [[day for day in days]]
+                            })
+
+        except sqlite3.Error as e:
+            print("Error:", e)
+        finally:
+            self.close()
+        return returned_course_dict
+
+    def populate(self):
         try:
             self.connect()
             self.remove_data()
@@ -62,6 +107,3 @@ class DatabaseManager:
         finally:
             self.close()
 
-
-db_manager = DatabaseManager("../services/database/CoursesTable.sqlite")
-db_manager.run()
