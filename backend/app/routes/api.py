@@ -8,6 +8,7 @@ api = Api()
 class ClassData(Resource):
     def post(self):
         # data_got is an array of classes
-        data_got = request.json 
+        data_got = request.json
         response = handle_data(dataFromRequest=data_got)
+        response = {'message':'From /api/data'}
         return jsonify(response)
