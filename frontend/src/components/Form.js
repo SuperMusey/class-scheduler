@@ -75,12 +75,12 @@
 
     return (
       <div className={styles.form}>
-        <form onSubmit={handleSubmit}>
+        <form>
           <button type="add_class" onClick={handleAddFields} disabled={formData.length>=MAX_CLASSES}>
             Add Class
           </button>
           {classes_input}
-          <button type="submit" disabled={formData.length<=0}>Submit</button>
+          <button type="submit" onClick={handleSubmit} disabled={formData.length<=0}>Submit</button>
         </form>
       </div>
     );

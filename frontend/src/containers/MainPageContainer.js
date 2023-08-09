@@ -15,7 +15,10 @@ function MainPageContainer(){
         try {
           // Send fetch req to backend for calculations and get table response
           const response = await sendData(getCoursesInputedAsArray(formData));
-          setResponseData(response); // Update the state with the parsed response data
+          console.log(response)
+          setResponseData({
+            0:[{ course: '', prof: '', rating: null, start: '', end: '', days: '' },],
+        }); // Update the state with the parsed response data
         } catch (error) {
           console.error('Error:', error);
         }
