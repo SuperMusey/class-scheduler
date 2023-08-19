@@ -21,9 +21,24 @@ function Table({ data }) {
               <td>{item.course}</td>
               <td>{item.prof}</td>
               <td>{item.rating}</td>
-              <td>{item.start}</td>
-              <td>{item.end}</td>
-              <td>{item.days}</td>
+              <td>
+                <div>
+                  <p>{item.starttime[0]}</p>
+                  <p>{item.starttime[1]}</p>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <p>{item.endtime[0]}</p>
+                  <p>{item.endtime[1]}</p>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <p>{item.days[0]}</p>
+                  <p>{item.days[1]}</p>
+                </div>
+              </td>
             </tr>
           ))}
         </tbody>

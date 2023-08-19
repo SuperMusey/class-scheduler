@@ -76,7 +76,7 @@
     return (
       <div className={styles.form}>
         <form onSubmit={handleSubmit}>
-          <button type="button" onClick={handleAddFields} disabled={formData.length>=MAX_CLASSES}>
+          <button type="button" onClick={handleAddFields} disabled={formData.length>=MAX_CLASSES} className={`${styles["add-class"]} add-class`}>
             Add Class
           </button>
           {classes_input}

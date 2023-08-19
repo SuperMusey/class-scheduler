@@ -21,3 +21,9 @@
 .button_container button[type="view_tables"]:hover{
     background-color: rgb(217, 204, 184);
 }
+
+.button_container p{
+    padding-right: 10px;
+    padding-left: 10px;
+    font-size: smaller;
+}

@@ -7,18 +7,16 @@ import {sendData} from '../utils/api'
 import {getCoursesInputedAsArray} from '../utils/parsing'
 
 function MainPageContainer(){
-    const [responseData, setResponseData] = useState({
-        0:[{ course: '', prof: '', rating: null, start: '', end: '', days: '' },],
-    });
+    const [responseData, setResponseData] = useState([
+        {avgrating:0,tabledata:[{prof: '', rating: null, starttime: [], endtime: [], days: [], course: '' },]},
+    ]);
 
     const handleFormSubmit = async (formData) => {
         try {
           // Send fetch req to backend for calculations and get table response
           const response = await sendData(getCoursesInputedAsArray(formData));
           console.log(response)
-          setResponseData({
-            0:[{ course: '', prof: '', rating: null, start: '', end: '', days: '' },],
-        }); // Update the state with the parsed response data
+          setResponseData(response); // Update the state with the parsed response data
         } catch (error) {
           console.error('Error:', error);
         }
