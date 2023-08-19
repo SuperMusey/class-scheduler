@@ -5,7 +5,7 @@ datadict = {
         {'prof':'Suarez','rating':2.5,'starttime':[1700],'endtime':[1815],'days':[["T","R"]]},
     ],
     "CASBI421":[
-        {'prof':"Liu",'rating':0,'starttime':[0000],'endtime':[0000],'days':[["Arranged"]]},
+        {'prof':"Liu",'rating':0,'starttime':[0000],'endtime':[0000],'days':[["A"]]},
     ],
     "CASBI203":[
         {'prof':"Beffert",'rating':0,'starttime':[930,1830],'endtime':[1045,2000],'days':[["T","R"],["M"]]},

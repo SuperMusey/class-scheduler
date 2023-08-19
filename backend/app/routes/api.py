@@ -10,5 +10,5 @@ class ClassData(Resource):
         # data_got is an array of classes
         data_got = request.json
         response = handle_data(dataFromRequest=data_got)
-        response = {'message':'From /api/data'}
+        #response = {'message':'From /api/data'}
         return jsonify(response)
