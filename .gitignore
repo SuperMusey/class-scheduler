@@ -7,6 +7,8 @@ backend/app/routes/__pycache__
 backend/app/services/__pycache__
 backend/app/models/__pycache__
 backend/app/utils/__pycache__
+backend/app/services/scrapers/__pycache__
+backend/config/__pycache__
 
 # testing
 frontend/coverage

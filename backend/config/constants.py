@@ -1,0 +1,1 @@
+daymapping = {"Mon": "M", "Tue": "T", "Wed": "W", "Thu": "R", "Fri": "F", "Sat": "S", "Sun": "U"}
