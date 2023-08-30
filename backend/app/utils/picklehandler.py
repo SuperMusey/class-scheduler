@@ -39,10 +39,18 @@ class PickleHandler:
             else:
                 print(key," not found!")
     
+    def view_key(self,filename,key):
+        data = self.list_pickle_data[filename]
+        if key in data:
+            print("Data for ",key)
+            print(data[key])
+        else:
+            print(key, " not found")
+
     def append_data(self, filenames, picklename):
         '''filenames -> List of filesnames to append to end of each other
         if list [a,b,c] appends b to a and c to b and stores in picklename'''
-        to_combine_data = []
+        to_combine_data = [] # contains dict of data per file
         for file in filenames:
             to_combine_data.append(self.list_pickle_data[file])
 
@@ -50,13 +58,22 @@ class PickleHandler:
         for d in to_combine_data:
             for key, value in d.items():
                 if key in combined_dict:
-                    combined_dict[key].append(value)
+                    for val in value:
+                        combined_dict[key].append(val)
                 else:
                     combined_dict[key] = value
 
         with open(os.path.join('Data', picklename + '_data.pkl'), "wb") as pickle_file:
             pickle.dump(combined_dict, pickle_file)
         print("Saved to ",picklename)
+
+    def edit_key(self, filename, key, nvalue):
+        data = self.list_pickle_data[filename]
+        if key in data:
+            data[key] = nvalue
+            print(key, " updated")
+        else:
+            print(key," not found")
 
 
 

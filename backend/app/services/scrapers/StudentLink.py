@@ -86,66 +86,72 @@ class StudentLinkScraper:
             college = college+"_fromafter_"+class_to_start
         self.__picklestorage__(college=college)
         input("Select the college to scrape in the website and go to class to scrape from if applicable\npress Enter....\n")
-        try:
-            while True:
-                ContinueSearchFromButton = driver.find_element(By.XPATH,"/html/body/form/center[2]/table/tbody/tr/td[2]/input") 
-                tbody = driver.find_element(By.XPATH,"/html/body/form/table[1]/tbody")
-                tr_elements = tbody.find_elements(By.TAG_NAME, "tr")
-                for tr in tr_elements:
-                    td_elements = tr.find_elements(By.TAG_NAME, "td")
-                    if len(td_elements)>=13:
-                        if td_elements[CLASS].text and ("Lecture" in td_elements[TYPE].text or "Independent" in td_elements[TYPE].text) and (len(td_elements[TYPE].text.split())<=2): #Typ 5,7 ignored
-                            class_name = "".join(td_elements[CLASS].text.split()[:-1])
-                            instructor = td_elements[TITLE_INSTRUCTOR].text.split()[-1]
-                            day = [
-                                [DAY_MAP[day.strip()] for day in day_collection.split(',') if day.strip() in DAY_MAP]
-                                  for day_collection in td_elements[DAY].text.split()
-                                  ]
-                            day = [sub_day for sub_day in day if sub_day] # Remove empty arrays
-                            start_time = [int(datetime.strptime(stime,"%I:%M%p").strftime("%H%M")) for stime in td_elements[11].text.split()]
-                            end_time = [int(datetime.strptime(etime,"%I:%M%p").strftime("%H%M")) for etime in td_elements[12].text.split()]
+        exceptionCaught = False
+        while not exceptionCaught:
+            try:
+                while True:
+                    ContinueSearchFromButton = driver.find_element(By.XPATH,"/html/body/form/center[2]/table/tbody/tr/td[2]/input") 
+                    tbody = driver.find_element(By.XPATH,"/html/body/form/table[1]/tbody")
+                    tr_elements = tbody.find_elements(By.TAG_NAME, "tr")
+                    for tr in tr_elements:
+                        td_elements = tr.find_elements(By.TAG_NAME, "td")
+                        if len(td_elements)>=13:
+                            if td_elements[CLASS].text and ("Lecture" in td_elements[TYPE].text or "Independent" in td_elements[TYPE].text) and (len(td_elements[TYPE].text.split())<=2): #Typ 5,7 ignored
+                                class_name = "".join(td_elements[CLASS].text.split()[:-1])
+                                instructor = td_elements[TITLE_INSTRUCTOR].text.split()[-1]
+                                day = [
+                                    [DAY_MAP[day.strip()] for day in day_collection.split(',') if day.strip() in DAY_MAP]
+                                    for day_collection in td_elements[DAY].text.split()
+                                    ]
+                                day = [sub_day for sub_day in day if sub_day] # Remove empty arrays
+                                start_time = [int(datetime.strptime(stime,"%I:%M%p").strftime("%H%M")) for stime in td_elements[11].text.split()]
+                                end_time = [int(datetime.strptime(etime,"%I:%M%p").strftime("%H%M")) for etime in td_elements[12].text.split()]
 
-                            # Make start and end time to have 0's when day is 'A'
-                            for idx, days in enumerate(day):
-                                if 'A' in days:
-                                    if idx == 0:
-                                        start_time = [0] + start_time
-                                        end_time = [0] + end_time
-                                    elif idx == 1:
-                                        start_time = start_time + [0]
-                                        end_time = end_time + [0]
+                                # Make start and end time to have 0's when day is 'A'
+                                for idx, days in enumerate(day):
+                                    if 'A' in days:
+                                        if idx == 0:
+                                            start_time = [0] + start_time
+                                            end_time = [0] + end_time
+                                        elif idx == 1:
+                                            start_time = start_time + [0]
+                                            end_time = end_time + [0]
 
-                            rating = self.getRmpRating(class_name=class_name,instructor=instructor)
+                                rating = self.getRmpRating(class_name=class_name,instructor=instructor)
 
-                            # Store data into dict
-                            if self.coursesDict.get(class_name) is None:
-                                self.coursesDict[class_name] = []
-                            self.coursesDict[class_name].append({
-                                'prof':instructor,
-                                'rating':rating,
-                                'starttime':start_time,
-                                'endtime':end_time,
-                                'days':day
-                            })
+                                # Store data into dict
+                                if self.coursesDict.get(class_name) is None:
+                                    self.coursesDict[class_name] = []
+                                self.coursesDict[class_name].append({
+                                    'prof':instructor,
+                                    'rating':rating,
+                                    'starttime':start_time,
+                                    'endtime':end_time,
+                                    'days':day
+                                })
 
-                            # Print or process the extracted information
-                            print("Class:", class_name)
-                            print("Instructor:", instructor)
-                            print("Rating:",rating)
-                            print("Type:", td_elements[TYPE].text)
-                            print("Day:", day)
-                            print("Start Time:", start_time)
-                            print("Stop Time:", end_time)
-                            print("=" * 40)  # Separation line
+                                # Print or process the extracted information
+                                print("Class:", class_name)
+                                print("Instructor:", instructor)
+                                print("Rating:",rating)
+                                print("Type:", td_elements[TYPE].text)
+                                print("Day:", day)
+                                print("Start Time:", start_time)
+                                print("Stop Time:", end_time)
+                                print("=" * 40)  # Separation line
 
-                with open(self.picklepath, 'wb') as pickle_file:
-                    pickle.dump(self.coursesDict, pickle_file)
-                print("Saved to ",self.picklepath)
+                    with open(self.picklepath, 'wb') as pickle_file:
+                        pickle.dump(self.coursesDict, pickle_file)
+                    print("Saved to ",self.picklepath)
 
-                driver.execute_script("arguments[0].click();", ContinueSearchFromButton)
-                time.sleep(2)
-        except NoSuchElementException:
-            input("Enter...")
-            print("Done")
-            driver.quit()
+                    driver.execute_script("arguments[0].click();", ContinueSearchFromButton)
+                    time.sleep(2)
+            except NoSuchElementException:
+                choice = input("Enter 1 to continue (Log in first) and 2 to quit...")
+                if int(choice)==1:
+                    continue
+                else:
+                    exceptionCaught = False
+                    print("Done")
+                    driver.quit()
 
